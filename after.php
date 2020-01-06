@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header('location: index.php');
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +45,10 @@
             </li>
         </ul>
 
+        <a href="profile.php" class="btn btn-dark btn-lg active" role="button" aria-pressed="true">Twój profil</a>
+        <a href="edit.php" class="btn btn-dark btn-lg active" role="button" aria-pressed="true">Edytuj profil</a>
         <a href="logout.php" class="btn btn-dark btn-lg active" role="button" aria-pressed="true">Wyloguj</a>
+
     </div>
 
 

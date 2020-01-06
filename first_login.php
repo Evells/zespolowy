@@ -4,6 +4,10 @@ session_start();
 if (!isset($_SESSION['login'])) {
     header('location: index.php');
 }
+
+$con = mysqli_connect('localhost', 'root', 'qwerty');
+mysqli_select_db($con, 'muzycy');
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -39,45 +43,43 @@ if (!isset($_SESSION['login'])) {
 
             Zanim przedziesz do dalszej części strony, uzupełnij swoje dane:
             <form action="update.php" method="POST">
+
                 <div class="form-group">
-                    <label for="name">Twoje imię: </label>
-                    <input name="name" id="name" class="form-control" placeholder="Jan" required>
-                </div>
-                <div class="form-group">
-                    <label for="surname">Nazwisko: </label>
-                    <input name="surname" id="surname" class="form-control" placeholder="Kowalski" required>
-                </div>
-                <div class="form-group">
-                    <label for="bdate">Data urodzenia: </label>
-                    <input type="date" id="bdate" class="form-control" name="bdate" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Twój e-mail(jeśli tylko zechesz się nim z nami podzielić): </label>
-                    <input name="email" id="email" class="form-control" placeholder="twojpieknymail@cośtam.jakiśkraj">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Numer telefonu (opcjonalnie, ale zawsze łatwiej się skontaktować): </label>
-                    <input name="phone" id="phone" class="form-control" placeholder="666?">
-                </div>
-                <div class="form-group">
-                    <label for="city">Miasto, w którym obecnie kocujesz: </label>
-                    <input name="city" id="city" class="form-control" placeholder="Łódź" required>
-                </div>
-                <div class="form-group">
-                    <label for="postcode">Kod pocztowy (jeżeli nie znasz, wpisz 00-000, bądź cokolwiek innego, i tak przejdzie): </label>
-                    <input name="postcode" id="postcode" class="form-control" placeholder="00-000" required>
-                </div>
-                <div class="form-group">
-                    <label for="adress">Reszta adresu (zakładamy że mieszkasz na jakieś ulicy/w jakieś wsi):  </label>
-                    <input name="adress" id="adress" class="form-control" placeholder="ulica, numer budynku">
-                </div>
-                <div class="form-group">
+                    <label for="name">Imię*: </label>
+                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $_SESSION['login']['name'] ?>" required pattern="[A-Za-z]{3,}" title="2 lub więcej znaków">
+
+                    <label for="name">Nazwisko*: </label>
+                    <input type="text" name="surname" id="surname" class="form-control" value="<?php echo $_SESSION['login']['surname'] ?>" required pattern="[A-Za-z]{3,}" title="2 lub więcej znaków">
+
+                    <label for="bdate">Data urodzenia*: </label>
+                    <input type="date" id="bdate" class="form-control" name="bdate" <?php echo $_SESSION['login']['bdate'] ?> max="2009-01-02" required>
+
+                    <label for="phone">Numer telefonu (np 784154263): </label>
+                    <input name="phone" id="phone" class="form-control" value="<?php echo $_SESSION['login']['phone'] ?>" pattern="[0-9]{9}">
+
+                    <label for="city">Miasto*: </label>
+                    <input type="text" name="city" id="city" class="form-control" value="<?php echo $_SESSION['login']['city'] ?>" required pattern="[A-Za-z]{2,}" title="Co najmniej 2, lub więcej znaków">
+
+                    <label for="postcode">Kod pocztowy (np 00-000)*: </label>
+                    <input type="text" name="postcode" id="postcode" class="form-control" value="<?php echo $_SESSION['login']['postcode'] ?>" pattern="[0-9]{2}-[0-9]{3}" required>
+
                     <label for="musicgenre">Typ muzyki, jaki Cię interesuje: </label>
-                    <input name="musicgenre" id="musicgenre" class="form-control" placeholder="k-pop też się tu znajdzie!" required>
+                    <select class="form-control" name="musicgenre" id="musicgenre">
+                        <option value="1">Pop</option>
+                        <option value="2">Rock</option>
+                        <option value="3">House</option>
+                        <option value="4">Muzyka filmowa</option>
+                        <option value="5">Rap</option>
+                        <option value="6">Muzyka klasyczna</option>
+                        <option value="7">R&B</option>
+                        <option value="8">Blues</option>
+                        <option value="9">Metal</option>
+                    </select>
                 </div>
-                <button class="btn btn-primary">Zarejestruj</button>
+                <button class="btn btn-primary">Zapisz</button>
                 <br/><br/>
             </form>
+            * Dane wymagane.
 
     </div>
 </div>

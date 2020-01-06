@@ -15,13 +15,10 @@ require './before.php';
 </div>
 
 <?php
-if (isset($_SESSION['register']) && $_SESSION['register'] == true) {
+if(isset($_SESSION['register']) && $_SESSION['register'] === true) {
     ?>
-    <div class="alert alert-dark alert-dismissible fade show" role="alert">
-        <strong>Dodano nowego użytkownika</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="alert alert-dark" role="alert">
+        Użytkownik zarejestrowany
     </div>
     <?php
     $_SESSION['register'] = false;

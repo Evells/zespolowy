@@ -57,13 +57,17 @@
                     <form action="rejestracja.php" method="POST">
                         <div class="form-group">
                             <label for="login">Login</label>
-                            <input name="login" id="login" class="form-control" placeholder="Podaj login" required>
+                            <input name="login" id="login" class="form-control" placeholder="Podaj login" required pattern=".{3,}">
                         </div>
                         <div class="form-group">
                             <label for="password">Hasło</label>
                             <input type="password" id="password" name="password" class="form-control"
                                    placeholder="Twoje tajne hasło" pattern=".{6,}"
                                    title="Hasło musi mieć 6 lub więcej znaków" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login">E-mail</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Podaj e-mail" required>
                         </div>
                 </div>
                 <div class="modal-footer">
