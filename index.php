@@ -1,5 +1,5 @@
 <?php
-require './before.php';
+require './before_login.php';
 ?>
 <div class="container bg-light text-black" style="border:1px solid #cecece">
     <div style="text-align:center; margin-top: 10px; margin-bottom: 10px">
@@ -13,14 +13,3 @@ require './before.php';
     </div>
     <br/>
 </div>
-
-<?php
-if(isset($_SESSION['register']) && $_SESSION['register'] === true) {
-    ?>
-    <div class="alert alert-dark" role="alert">
-        Użytkownik zarejestrowany
-    </div>
-    <?php
-    $_SESSION['register'] = false;
-}
-?>

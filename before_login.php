@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (isset($_SESSION['login'])) {
+    header('location: home.php');
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,40 +20,17 @@
     <title>Muzyczna wyszukiwarka</title>
 </head>
 <body style="background-color:#e9e9e9">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">M</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="index.php">Strona główna</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Odnośniki
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="">odośnik1</a>
-                    <a class="dropdown-item" href="">odnośnik2</a>
-                    <a class="dropdown-item" href="">odnośnik3</a>
-                    <a class="dropdown-item" href="">odnośnik4</a>
-            </li>
-        </ul>
-
-        <button type="button" class="btn btn-dark mr-2" data-toggle="modal" data-target=".bd-example-modal-lg">
-            Rejestracja
-        </button>
-
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".logowanie">
-            Logowanie
-        </button>
-    </div>
-
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand">M</a>
+        <form class="form-inline">
+            <button type="button" class="btn btn-dark my-2 my-sm-0" data-toggle="modal" data-target=".bd-example-modal-lg">
+                Rejestracja
+            </button>
+            <button type="button" class="btn btn-dark" data-toggle="modal" data-target=".logowanie">
+                Logowanie
+            </button>
+        </form>
+    </nav>
     <!-- Modal 1 -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
          aria-hidden="true">
@@ -54,7 +40,7 @@
                     <h5 class="modal-title">Rejestracja</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="rejestracja.php" method="POST">
+                    <form action="registration.php" method="POST">
                         <div class="form-group">
                             <label for="login">Login</label>
                             <input name="login" id="login" class="form-control" placeholder="Podaj login" required pattern=".{3,}">
@@ -88,7 +74,7 @@
                     <h5 class="modal-title">Logowanie</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="logowanie.php" method="POST">
+                    <form action="login.php" method="POST">
                         <div class="form-group">
                             <input type="text" name="login" placeholder="Login" class="form-control" required>
                         </div>
@@ -106,6 +92,20 @@
         </div>
     </div>
 </nav>
+
+<?php
+if (isset($_SESSION['register']) && $_SESSION['register'] == true) {
+    ?>
+    <div class="alert alert-dark alert-dismissible fade show" role="alert">
+        <strong>Dodano nowego użytkownika</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <?php
+    $_SESSION['register'] = false;
+}
+?>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

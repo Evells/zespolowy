@@ -19,12 +19,12 @@ mysqli_select_db($con, 'muzycy');
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./css/bootstrap.css" crossorigin="anonymous">
 
-    <title>Za pierwszym razem boli zawsze tak samo, hehehe :v</title>
+    <title>Pierwsze logowanie</title>
 </head>
 <body style="background-color:#e9e9e9">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Fandom</a>
+    <a class="navbar-brand" href="#">M</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,22 +58,22 @@ mysqli_select_db($con, 'muzycy');
                     <input name="phone" id="phone" class="form-control" value="<?php echo $_SESSION['login']['phone'] ?>" pattern="[0-9]{9}">
 
                     <label for="city">Miasto*: </label>
-                    <input type="text" name="city" id="city" class="form-control" value="<?php echo $_SESSION['login']['city'] ?>" required pattern="[A-Za-z]{2,}" title="Co najmniej 2, lub więcej znaków">
+                    <input type="text" name="city" id="city" class="form-control" value="<?php echo $_SESSION['login']['city'] ?>" required pattern="[A-ZĄĘŁŃÓŚŹŻa-ząćęłńóśźż]{2,}" title="Co najmniej 2, lub więcej znaków">
 
                     <label for="postcode">Kod pocztowy (np 00-000)*: </label>
                     <input type="text" name="postcode" id="postcode" class="form-control" value="<?php echo $_SESSION['login']['postcode'] ?>" pattern="[0-9]{2}-[0-9]{3}" required>
 
                     <label for="musicgenre">Typ muzyki, jaki Cię interesuje: </label>
                     <select class="form-control" name="musicgenre" id="musicgenre">
-                        <option value="1">Pop</option>
-                        <option value="2">Rock</option>
-                        <option value="3">House</option>
-                        <option value="4">Muzyka filmowa</option>
-                        <option value="5">Rap</option>
-                        <option value="6">Muzyka klasyczna</option>
-                        <option value="7">R&B</option>
-                        <option value="8">Blues</option>
-                        <option value="9">Metal</option>
+                        <option value=Pop">Pop</option>
+                        <option value="Rock">Rock</option>
+                        <option value="House">House</option>
+                        <option value="Muzyka filmowa">Muzyka filmowa</option>
+                        <option value="Rap">Rap</option>
+                        <option value="Muzyka klasyczna">Muzyka klasyczna</option>
+                        <option value="R&B">R&B</option>
+                        <option value="Blues">Blues</option>
+                        <option value="Metal">Metal</option>
                     </select>
                 </div>
                 <button class="btn btn-primary">Zapisz</button>

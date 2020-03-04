@@ -23,6 +23,6 @@ if($num == 1)
 }
 else
 {
-    header('location: error.php');
+    header('location: login_error.php');
 }
 ?>

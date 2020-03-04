@@ -17,6 +17,7 @@ $city = $_POST['city'];
 $pcode = $_POST['postcode'];
 $music = $_POST['musicgenre'];
 $lang = $_POST['language'];
+$desc = $_POST['description'];
 
 $s = "select * from `users` where login = '$login'";
 
@@ -82,8 +83,14 @@ else {
     else
         $_SESSION['login']['language']=$lang;
 
+    if($desc===''){
+        $desc=$_SESSION['login']['description'];
+    }
+    else
+        $_SESSION['login']['description']=$desc;
 
-    $reg = "UPDATE `users` SET name='$name', surname='$sur', bdate='$bday', email='$mail', phone='$phone', city='$city', postcode='$pcode', musicgenre='$music', avatar='0', description='', language='$lang' WHERE id=$id";
+
+    $reg = "UPDATE `users` SET name='$name', surname='$sur', bdate='$bday', email='$mail', phone='$phone', city='$city', postcode='$pcode', musicgenre='$music', avatar='0', description='$desc', language='$lang' WHERE id=$id";
     mysqli_query($con, $reg);
 }
 if($name!==NULL) {

@@ -18,7 +18,7 @@ $num = mysqli_num_rows($result);
 
 if($num == 1)
 {
-    header('location: error.php');
+    header('location: registration_error.php');
 }
 else
 {

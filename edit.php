@@ -1,5 +1,28 @@
 <?php
-require 'after.php';
+require 'after_login.php';
+
+if (isset($_POST["submit"])) {
+    $target_dir = "./obrazki/";
+    $target_file = $target_dir . $_SESSION['login']['id'] . ".png";
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if ($check !== false) {
+        $uploadOk = 1;
+
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+
+        $con = mysqli_connect('localhost', 'root', 'qwerty');
+        mysqli_select_db($con, 'muzycy');
+        $reg = "UPDATE `users` SET `avatar` = '" . $_SESSION['login']['id'] . "' WHERE id = " . $_SESSION['login']['id'] . " ";
+        mysqli_query($con, $reg);
+        $_SESSION['login']['avatar'] = $_SESSION['login']['id'];
+    } else {
+//        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+}
 
 ?>
 
@@ -8,10 +31,44 @@ require 'after.php';
         <br/>
     </div>
     <div class="row">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <?php
+            if ($_SESSION['login']['avatar'] == 0) {
+                echo '<img class="border border-secondary p-1" src="https://via.placeholder.com/150" alt="" />';
+                echo '
+                    <form action="edit.php" method="post" enctype="multipart/form-data">
+                    <div class="p-1">
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+                    <div class="p-1">
+                        <input type="submit" value="Dodaj Avatar" name="submit">
+                    </div>
+                    </form>';
+            } else {
+                echo '<img style="width: 150px; height:150px;" class="border border-secondary p-1" src="./obrazki/' . $_SESSION['login']['id'] . '.png" alt="" />';
+
+
+        echo '</div>
+        <div class="col-2">
+            <br/><br/> ';
+            echo '
+            <form action="edit.php" method="post" enctype="multipart/form-data">
+                <div class="p-1">
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                </div>
+                <div class="p-1">
+                    <input type="submit" value="Zmien obrazek" name="submit">
+                </div>
+            </form>';
+            }
+            ?>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
         <div class="col-2 bg-light"></div>
         <div class="col-8 bg-light" style="text-align: center">
-
-            Dokonaj zmian, jakich chcesz :)
             <form action="update.php" method="POST">
                 <div class="form-group">
                     <label for="name">Imie: </label>
@@ -19,7 +76,7 @@ require 'after.php';
                 </div>
                 <div class="form-group">
                     <label for="surname">Nazwisko: </label>
-                    <input type="text" name="surname" id="surname" class="form-control" value="<?php echo $_SESSION['login']['surname'] ?>" pattern="[A-Za-z]{3,}" title="Co najmniej 3, lub więcej znaków">
+                    <input type="text" name="surname" id="surname" class="form-control" value="<?php echo $_SESSION['login']['surname'] ?>" pattern="[A-Za-ząćęłńóśźż]{3,}" title="Co najmniej 3, lub więcej znaków">
                 </div>
                 <div class="form-group">
                     <label for="bdate">Data urodzenia: </label>
@@ -38,7 +95,7 @@ require 'after.php';
                 </div>
                 <div class="form-group">
                     <label for="city">Miasto: </label>
-                    <input type="text" name="city" id="city" class="form-control" value="<?php echo $_SESSION['login']['city'] ?>" pattern="[A-Za-z]{2,}" title="Co najmniej 2, lub więcej znaków">
+                    <input type="text" name="city" id="city" class="form-control" value="<?php echo $_SESSION['login']['city'] ?>" pattern="[A-ZĄĘŁŃÓŚŹŻa-ząćęłńóśźż]{2,}" title="Co najmniej 2, lub więcej znaków">
                 </div>
                 <div class="form-group">
                     <label for="postcode">Kod pocztowy (np 00-000): </label>
@@ -47,29 +104,38 @@ require 'after.php';
                     <div class="form-group">
                         <label for="musicgenre">Typ muzyki, jaki Cię interesuje: </label>
                         <select class="form-control" name="musicgenre" id="musicgenre">
-                            <option value="1">Pop</option>
-                            <option value="2">Rock</option>
-                            <option value="3">House</option>
-                            <option value="4">Muzyka filmowa</option>
-                            <option value="5">Rap</option>
-                            <option value="6">Muzyka klasyczna</option>
-                            <option value="7">R&B</option>
-                            <option value="8">Blues</option>
-                            <option value="9">Metal</option>
+                            <option value="Pop">Pop</option>
+                            <option value="Rock">Rock</option>
+                            <option value="House">House</option>
+                            <option value="Muzyka filmowa">Muzyka filmowa</option>
+                            <option value="Rap">Rap</option>
+                            <option value="Muzyka klasyczna">Muzyka klasyczna</option>
+                            <option value="R&B">R&B</option>
+                            <option value="Blues">Blues</option>
+                            <option value="Metal">Metal</option>
                         </select>
                     </div>
                 <div class="form-group">
                     <label for="language">Jęzki, które znasz: </label>
                     <input type="text" name="language" id="language" class="form-control" value="<?php echo $_SESSION['login']['language'] ?>" pattern="[A-Za-z]{3,}" title="Co najmniej 3, lub więcej znaków">
                 </div>
+                <div class="form-group mb-4">
+                    <label for="description">Coś o tobie: </label>
+                    <textarea class="form-control" name="description" rows="5"><?php echo $_SESSION['login']['description']; ?></textarea>
+                </div>
+                <div class="form-group mx-sm-3 mb-4">
+                        Krótka instrukcja obsługi:
+                        <br/>
+                        < i ><i>twój tekst</i>< /i >  pochyły
+                        <br/>
+                        < b > <b>twój tekst</b> < /b > pogrubiony
+                        <br/>
+                        < br/ > koniec linii
+                </div>
                 <button class="btn btn-primary">Zapisz</button>
                 <br/><br/>
             </form>
-
         </div>
     </div>
-
-    <div class="col-2 bg-light"></div>
-    <br/>
-</body>
-</html>
+</div>
+<br/>
